@@ -99,11 +99,11 @@ class Game:
             print(tab)
             choise = input(f'{prfx} Your name is: \'{self.name}\' \nWant to change? ( Y | N ) \n{log}')
 
-            if (choise == 'Y') or (choise == 'y') or (choise == 'Н') or (choise == 'н') :
+            if choise == 'Y' or choise == 'y' or choise == 'Н' or choise == 'н' :
                 self.name = input(f'{prfx} Please, enter your name: \n{log}')
                 print(tab)
                 print(f'{prfx} Your name is: \'{self.name}\'')
-            elif (choise == 'N') or (choise == 'n') or (choise == 'Т') or (choise == 'т') :
+            elif choise == 'N' or choise == 'n' or choise == 'Т' or choise == 'т' :
                 print(tab)
                 print(f'{prfx} Your name is: \'{self.name}\'')
             else:
@@ -114,15 +114,15 @@ class Game:
             print(tab)
             diff = input(f'{prfx} Set the difficulty: \nE - Easy • \nN - Normal • \nH - Hard • \n{log}')
 
-            if (diff == 'E') or (diff == 'e') or (diff == 'У') or (diff == 'у') :
+            if diff == 'E' or diff == 'e' or diff == 'У' or diff == 'у' :
                 self.difficulty = 'Easy'
                 print(tab)
                 print(f'{prfx} Difficulty was set: \'{self.difficulty}\'')
-            elif (diff == 'N') or (diff == 'n') or (diff == 'Т') or (diff == 'т'):
+            elif diff == 'N' or diff == 'n' or diff == 'Т' or diff == 'т' :
                 self.difficulty = 'Normal'
                 print(tab)
                 print(f'{prfx} Difficulty was set: \'{self.difficulty}\'')
-            elif (diff == 'H') or (diff == 'h') or (diff == 'Р') or (diff == 'р') :
+            elif diff == 'H' or diff == 'h' or diff == 'Р' or diff == 'р' :
                 self.difficulty = 'Hard'
                 print(tab)
                 print(f'{prfx} Difficulty was set: \'{self.difficulty}\'')
@@ -182,7 +182,7 @@ class Game:
             print(tab)
             self.door = input(f'{prfx} Choose a door: \n1 - Door №1 • \n2 - Door №2 • \n3 - Door №3 • \n{log}')
 
-            if (self.door == '1') or (self.door == '2') or (self.door == '3') :
+            if self.door == '1' or self.door == '2' or self.door == '3' :
                 prize_list = [
                     'COINS', 
                     'HEALTH', 
@@ -318,7 +318,7 @@ class Game:
                     damage = ri(1, 3)
                     coins = ri(1, 5)
 
-                    if (self.coins - coins >= 0):
+                    if self.coins - coins >= 0:
                         self.coins -= coins
                     self.player_health -= damage
                     print(tab)
@@ -389,7 +389,7 @@ class Game:
 
             elif first_attack == 'MONSTER':
 
-                while (self.monster_health > 0) and (self.player_health > 0):
+                while self.monster_health > 0 and self.player_health > 0:
                     self.player_damage = ri(1, 2)
                     self.monster_damage = ri(1, 2)
                     print(tab)
@@ -422,7 +422,7 @@ class Game:
 
             if first_attack == 'PLAYER':
 
-                while (self.monster_health > 0) and (self.player_health > 0):
+                while self.monster_health > 0 and self.player_health > 0:
                     self.player_damage = ri(2, 5)
                     self.monster_damage = ri(2, 5)
                     print(tab)
@@ -452,7 +452,7 @@ class Game:
 
             elif first_attack == 'MONSTER':
 
-                while (self.monster_health > 0) and (self.player_health > 0):
+                while self.monster_health > 0 and self.player_health > 0:
                     self.player_damage = ri(2, 5)
                     self.monster_damage = ri(2, 5)
                     print(tab)
@@ -485,7 +485,7 @@ class Game:
 
             if first_attack == 'PLAYER':
 
-                while (self.monster_health > 0) and (self.player_health > 0):
+                while self.monster_health > 0 and self.player_health > 0:
                     self.player_damage = ri(3, 7)
                     self.monster_damage = ri(3, 7)
                     print(tab)
@@ -515,7 +515,7 @@ class Game:
 
             elif first_attack == 'MONSTER':
 
-                while (self.monster_health > 0) and (self.player_health > 0):
+                while self.monster_health > 0 and self.player_health > 0:
                     self.player_damage = ri(3, 7)
                     self.monster_damage = ri(3, 7)
                     print(tab)
@@ -554,7 +554,7 @@ class Game:
         print(tab)
         record = input(f'{prfx} Results of player \'{self.name}\': \n{prfx} COINS: [ {self.coins}$ ] | KILLS: [ {self.kills} ] \n{prfx} Want to write the result to a table? ( Y | N )\n{log}')
 
-        if (record == 'Y') or (record == 'y') or (record == 'Н') or (record == 'н'):
+        if record == 'Y' or record == 'y' or record == 'Н' or record == 'н':
             records = open('./.Dangeon/.data/records.dungeon', 'a')
             records_data = f'\n{self.name}: {self.difficulty} * {self.coins} * {self.kills}'
             records.write(records_data)
@@ -562,8 +562,8 @@ class Game:
             print(tab)
             input(f'{prfx} Your results have been successfully written to the table ... \n {prfx} Thank you for being with us!\n')
             self.menu()
-        elif (record == 'N') or (record == 'n') or (record == 'Т') or (record == 'т'):
-            input()
+        elif record == 'N' or record == 'n' or record == 'Т' or record == 'т':
+            input(f'{prfx} Thank you for being with us!')
             self.menu()
         else:
             print(tab)
