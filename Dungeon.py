@@ -1,12 +1,12 @@
-### Imports ###
+# Imports
 from os import getlogin, makedirs as md
 from random import randint as ri
 
 
-### Getting username ###
+# Getting username
 user = getlogin()
 
-### First start ###
+# First start
 try:
     records = open('./.Dangeon/.data/records.dungeon', 'a')
     records.close()
@@ -26,46 +26,49 @@ except FileNotFoundError:
     config.write(config_cfg)
     config.close()
 
-### Importing configs ###
+# Importing configs
 config = open('./config.ini', 'r')
 config_cfg = config.read()
 cfg_list = config_cfg.split(':')
 
-### Designer greeting rug ###
+# Designer greeting rug
 length = int(cfg_list[0])
 breadth = int(cfg_list[1])
 
-def out(n,string):
-    for i in range(n):
-        print ("{}".format(string), end='')
 
-def print_out(hyphen_count,polka_count):
+def out(n, string):
+    for i in range(n):
+        print("{}".format(string), end='')
+
+
+def print_out(hyphen_count, polka_count):
     out(hyphen_count, '-')
     out(polka_count, '.|.')
     out(hyphen_count, '-')
-    print ('')
+    print('')
+
 
 hyphen_count = (breadth - 3) // 2
 polka_count = 1
 for i in range(length):
     if i < (length // 2):
-        print_out(hyphen_count,polka_count)        
+        print_out(hyphen_count, polka_count)
         hyphen_count = hyphen_count - 3
         polka_count = polka_count + 2
     elif i == (length // 2 + 1):
         out((breadth - 13)//2, '-')
-        print (cfg_list[2], end='')
+        print(cfg_list[2], end='')
         out((breadth - 13)//2, '-')
-        print ('')
+        print('')
         hyphen_count = hyphen_count + 3
-        polka_count = polka_count - 2        
+        polka_count = polka_count - 2
     elif (length // 2) < i < length:
-        print_out(hyphen_count,polka_count)        
+        print_out(hyphen_count, polka_count)
         hyphen_count = hyphen_count + 3
-        polka_count = polka_count - 2 
-print_out(hyphen_count,polka_count)
+        polka_count = polka_count - 2
+print_out(hyphen_count, polka_count)
 
-####### BASIC GAME CLASS #######
+# BASIC GAME CLASS
 
 tab = '\n-------------------------\n'
 prfx = '[ ♦ DUNGEON ♦ ]'
@@ -85,60 +88,65 @@ class Game:
     kills = 0
     difficulty = None
 
-    ### Game menu ###
+    # Game menu
     def menu(self):
-        ### Importing resources ###
+        # Importing resources
         records = open('./.Dangeon/.data/records.dungeon', 'r')
         records_data = records.read()
         records_list = records_data.split('\n')
         print()
-        chs = input(f'{prfx} 1. Start the game • \n{prfx} 2. High score table • \n{prfx} 3. Quit the game • \n{log}')
+        chs = input(
+            f'{prfx} 1. Start the game • \n{prfx} 2. High score table • \n{prfx} 3. Quit the game • \n{log}')
 
         if chs == '1':
-            ### Name ###
+            # Name
             print(tab)
-            choise = input(f'{prfx} Your name is: \'{self.name}\' \nWant to change? ( Y | N ) \n{log}')
+            choise = input(
+                f'{prfx} Your name is: \'{self.name}\' \nWant to change? ( Y | N ) \n{log}')
 
-            if choise == 'Y' or choise == 'y' or choise == 'Н' or choise == 'н' :
+            if choise == 'Y' or choise == 'y' or choise == 'Н' or choise == 'н':
                 self.name = input(f'{prfx} Please, enter your name: \n{log}')
                 print(tab)
                 print(f'{prfx} Your name is: \'{self.name}\'')
-            elif choise == 'N' or choise == 'n' or choise == 'Т' or choise == 'т' :
+            elif choise == 'N' or choise == 'n' or choise == 'Т' or choise == 'т':
                 print(tab)
                 print(f'{prfx} Your name is: \'{self.name}\'')
             else:
                 print(tab)
-                print(f'{prfx} There is no choice of \'{choise}\' ! \nSet default name: \'{self.name}\'')
+                print(
+                    f'{prfx} There is no choice of \'{choise}\' ! \nSet default name: \'{self.name}\'')
 
-            ### Difficulty ###
+            # Difficulty
             print(tab)
-            diff = input(f'{prfx} Set the difficulty: \nE - Easy • \nN - Normal • \nH - Hard • \n{log}')
+            diff = input(
+                f'{prfx} Set the difficulty: \nE - Easy • \nN - Normal • \nH - Hard • \n{log}')
 
-            if diff == 'E' or diff == 'e' or diff == 'У' or diff == 'у' :
+            if diff == 'E' or diff == 'e' or diff == 'У' or diff == 'у':
                 self.difficulty = 'Easy'
                 print(tab)
                 print(f'{prfx} Difficulty was set: \'{self.difficulty}\'')
-            elif diff == 'N' or diff == 'n' or diff == 'Т' or diff == 'т' :
+            elif diff == 'N' or diff == 'n' or diff == 'Т' or diff == 'т':
                 self.difficulty = 'Normal'
                 print(tab)
                 print(f'{prfx} Difficulty was set: \'{self.difficulty}\'')
-            elif diff == 'H' or diff == 'h' or diff == 'Р' or diff == 'р' :
+            elif diff == 'H' or diff == 'h' or diff == 'Р' or diff == 'р':
                 self.difficulty = 'Hard'
                 print(tab)
                 print(f'{prfx} Difficulty was set: \'{self.difficulty}\'')
             else:
                 self.difficulty = 'Normal'
                 print(tab)
-                print(f'{prfx} There is no choice of \'{diff}\' ! \nDefault difficulty was set: \'{self.difficulty}\'')
+                print(
+                    f'{prfx} There is no choice of \'{diff}\' ! \nDefault difficulty was set: \'{self.difficulty}\'')
 
-            self.settings()       
-        elif chs == '2' :
+            self.settings()
+        elif chs == '2':
             print(tab)
             print('•••••••••••••••••••••••••')
             print('\n'.join(records_list))
             print('•••••••••••••••••••••••••')
             self.menu()
-        elif chs == '3' :
+        elif chs == '3':
             input()
             quit()
         else:
@@ -147,9 +155,9 @@ class Game:
             print(tab)
             self.menu()
 
-####### MAIN GAME CYCLE #######
+# MAIN GAME CYCLE
 
-    ### Setting the values of the main variables depending on the difficulty ###
+    # Setting the values of the main variables depending on the difficulty
     def settings(self):
 
         if self.difficulty == 'Easy':
@@ -164,35 +172,37 @@ class Game:
             self.player_maxhealth = 10
             self.player_health = 10
             self.coins = 0
-        
+
         print(tab)
-        print('                   ***'                   )
+        print('                   ***')
         print('******************* - *******************')
         print('***************  |START|  ***************')
         print('******************* - *******************')
-        print('                   ***'                   )
+        print('                   ***')
         self.start()
 
-####### MAIN FUNCTION - GAME LOGIK #######
+# MAIN FUNCTION - GAME LOGIK
     def start(self):
 
         while self.player_health > 0:
             print(tab)
-            print(f'{self.name}: \n[ {self.player_health}♥ ] *** [ {self.coins}$ ]')
+            print(
+                f'{self.name}: \n[ {self.player_health}♥ ] *** [ {self.coins}$ ]')
             print(tab)
-            self.door = input(f'{prfx} Choose a door: \n1 - Door №1 • \n2 - Door №2 • \n3 - Door №3 • \n{log}')
+            self.door = input(
+                f'{prfx} Choose a door: \n1 - Door №1 • \n2 - Door №2 • \n3 - Door №3 • \n{log}')
 
-            if self.door == '1' or self.door == '2' or self.door == '3' :
+            if self.door == '1' or self.door == '2' or self.door == '3':
                 prize_list = [
-                    'COINS', 
-                    'HEALTH', 
+                    'COINS',
+                    'HEALTH',
                     'MONSTER'
                 ]
                 self.door = ri(0, 2)
 
                 try:
                     self.prize = prize_list[int(self.door)]
-                except:
+                except TypeError:
                     print(tab)
                     print(f'There is no choice of \'{self.door}\' !')
                     self.start()
@@ -204,10 +214,10 @@ class Game:
 
             self.surprize()
 
-    ### Door treatment ###
+    # Door treatment
     def surprize(self):
 
-        ### COINS ###
+        # COINS
         if self.prize == 'COINS':
 
             if self.difficulty == 'Easy':
@@ -224,12 +234,12 @@ class Game:
                 print(f'{prfx} You got coins + 2$')
 
             self.start()
-        ### LIVES ###
+        # LIVES
         elif self.prize == 'HEALTH':
 
             if self.difficulty == 'Easy':
 
-                if  (self.player_maxhealth - self.player_health >= 3) :
+                if (self.player_maxhealth - self.player_health >= 3):
                     self.player_health += 3
                     print(tab)
                     print(f'{prfx} You got + 3♥ lives')
@@ -241,14 +251,15 @@ class Game:
                     if health != 0:
                         print(f'{prfx} You got + {health}♥ lives')
                     else:
-                        print(f'{prfx} You didn\'t get a lives as their value is maximized...')
+                        print(
+                            f'{prfx} You didn\'t get a lives as their value is maximized...')
 
             elif self.difficulty == 'Normal':
 
-                if  (self.player_maxhealth - self.player_health >= 2) :
+                if (self.player_maxhealth - self.player_health >= 2):
                     self.player_health += 2
                     print(tab)
-                    print(f'{prfx} You got + 2♥ lives')            
+                    print(f'{prfx} You got + 2♥ lives')
                 else:
                     health = self.player_maxhealth - self.player_health
                     self.player_health += health
@@ -257,11 +268,12 @@ class Game:
                     if health != 0:
                         print(f'{prfx} You got + {health}♥ lives')
                     else:
-                        print(f'{prfx} You didn\'t get a lives as their value is maximized...')
+                        print(
+                            f'{prfx} You didn\'t get a lives as their value is maximized...')
 
             elif self.difficulty == 'Hard':
 
-                if  (self.player_maxhealth - self.player_health >= 1) :
+                if (self.player_maxhealth - self.player_health >= 1):
                     self.player_health += 1
                     print(tab)
                     print(f'{prfx} You got + 1♥ lives')
@@ -269,33 +281,38 @@ class Game:
                     health = self.player_maxhealth - self.player_health
                     self.player_health += health
                     print(tab)
-                    
+
                     if health != 0:
                         print(f'{prfx} You got + {health}♥ lives')
                     else:
-                        print(f'{prfx} You didn\'t get a lives as their value is maximized...')
+                        print(
+                            f'{prfx} You didn\'t get a lives as their value is maximized...')
 
             self.start()
-        ### MONSTER ###
+        # MONSTER
         elif self.prize == 'MONSTER':
             print(tab)
-            monster = input(f'{prfx} You met a monster! \n1.Attack • \n2.Run • \n{log}')
+            monster = input(
+                f'{prfx} You met a monster! \n1.Attack • \n2.Run • \n{log}')
 
             if monster == '1':
 
                 if self.difficulty == 'Easy':
                     self.coins += 1
                     print(tab)
-                    print(f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 1$')
+                    print(
+                        f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 1$')
                 elif self.difficulty == 'Normal':
                     self.coins += 2
                     print(tab)
-                    print(f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 2$')
+                    print(
+                        f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 2$')
                 elif self.difficulty == 'Hard':
                     self.coins += 3
                     print(tab)
-                    print(f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 3$')
-                
+                    print(
+                        f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 3$')
+
                 self.attack()
             elif monster == '2':
 
@@ -303,7 +320,8 @@ class Game:
                     damage = ri(0, 1)
                     self.player_health -= damage
                     print(tab)
-                    print(f'{self.name}: \nRUN !!! \n{prfx} Monster damages player \'{self.name}\' - {damage}♥')
+                    print(
+                        f'{self.name}: \nRUN !!! \n{prfx} Monster damages player \'{self.name}\' - {damage}♥')
                 elif self.difficulty == 'Normal':
                     damage = ri(0, 2)
                     coins = ri(1, 5)
@@ -313,7 +331,8 @@ class Game:
 
                     self.player_health -= damage
                     print(tab)
-                    print(f'{self.name}: \nRUN !!! \n{prfx} Monster damages player \'{self.name}\' - {damage}♥ and he loses coins - {coins}$')
+                    print(
+                        f'{self.name}: \nRUN !!! \n{prfx} Monster damages player \'{self.name}\' - {damage}♥ and he loses coins - {coins}$')
                 elif self.difficulty == 'Hard':
                     damage = ri(1, 3)
                     coins = ri(1, 5)
@@ -322,34 +341,39 @@ class Game:
                         self.coins -= coins
                     self.player_health -= damage
                     print(tab)
-                    print(f'{self.name}: \nRUN !!! \n{prfx} Monster damages player \'{self.name}\' - {damage}♥ and he loses coins - {coins}$')
+                    print(
+                        f'{self.name}: \nRUN !!! \n{prfx} Monster damages player \'{self.name}\' - {damage}♥ and he loses coins - {coins}$')
 
                 self.start()
             else:
                 print(tab)
-                print(f'{prfx} There is no choise of \'{monster}\' ! \n The default selection is made ...')
+                print(
+                    f'{prfx} There is no choise of \'{monster}\' ! \n The default selection is made ...')
 
                 if self.difficulty == 'Easy':
                     self.coins += 1
                     print(tab)
-                    print(f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 1$')
+                    print(
+                        f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 1$')
                 elif self.difficulty == 'Normal':
                     self.coins += 2
                     print(tab)
-                    print(f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 2$')
+                    print(
+                        f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 2$')
                 elif self.difficulty == 'Hard':
                     self.coins += 3
                     print(tab)
-                    print(f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 3$')
-             
+                    print(
+                        f'{self.name}: \nATTACK !!! \n{prfx} \'{self.name}\' gets coins for courage: + 3$')
+
                 self.attack()
 
-    ### Battle with the monster ###
+    # Battle with the monster
     def attack(self):
-        ### Who is first? Let it decide randomly xD ###
+        # Who is first? Let it decide randomly xD
         fa = ri(0, 1)
         fa_list = [
-            'PLAYER', 
+            'PLAYER',
             'MONSTER'
         ]
         first_attack = fa_list[fa]
@@ -363,26 +387,31 @@ class Game:
                     self.player_damage = ri(1, 2)
                     self.monster_damage = ri(1, 2)
                     print(tab)
-                    print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                    print(
+                        f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
                     print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.player_health > 0:
                         self.monster_health -= self.player_damage
                         print(tab)
-                        print(f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
+                        print(
+                            f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
                         print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.monster_health > 0:
                         self.player_health -= self.monster_damage
                         print(tab)
-                        print(f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
-                        print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                        print(
+                            f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
+                        print(
+                            f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
 
                 if self.monster_health <= 0:
                     self.kills += 1
                     win = ri(1, 10)
                     print(tab)
-                    print(f'{prfx} The monster has been killed! You get coins + {win}$')
+                    print(
+                        f'{prfx} The monster has been killed! You get coins + {win}$')
                     self.start()
                 elif self.player_health <= 0:
                     self.game_over()
@@ -393,31 +422,36 @@ class Game:
                     self.player_damage = ri(1, 2)
                     self.monster_damage = ri(1, 2)
                     print(tab)
-                    print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                    print(
+                        f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
                     print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.monster_health > 0:
                         self.player_health -= self.monster_damage
                         print(tab)
-                        print(f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
-                        print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
-                    
+                        print(
+                            f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
+                        print(
+                            f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+
                     if self.player_health > 0:
                         self.monster_health -= self.player_damage
                         print(tab)
-                        print(f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
+                        print(
+                            f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
                         print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                 if self.monster_health <= 0:
                     self.kills += 1
                     win = ri(1, 10)
                     print(tab)
-                    print(f'{prfx} The monster has been killed! You get coins + {win}$')
+                    print(
+                        f'{prfx} The monster has been killed! You get coins + {win}$')
                     self.start()
                 elif self.player_health <= 0:
                     self.game_over()
 
-        elif self.difficulty == 'Normal':           
+        elif self.difficulty == 'Normal':
             self.monster_health = ri(3, 5)
 
             if first_attack == 'PLAYER':
@@ -426,26 +460,31 @@ class Game:
                     self.player_damage = ri(2, 5)
                     self.monster_damage = ri(2, 5)
                     print(tab)
-                    print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                    print(
+                        f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
                     print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.player_health > 0:
                         self.monster_health -= self.player_damage
                         print(tab)
-                        print(f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
+                        print(
+                            f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
                         print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.monster_health > 0:
                         self.player_health -= self.monster_damage
                         print(tab)
-                        print(f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
-                        print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                        print(
+                            f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
+                        print(
+                            f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
 
                 if self.monster_health <= 0:
                     self.kills += 1
                     win = ri(1, 5)
                     print(tab)
-                    print(f'{prfx} The monster has been killed! You get coins + {win}$')
+                    print(
+                        f'{prfx} The monster has been killed! You get coins + {win}$')
                     self.start()
                 elif self.player_health <= 0:
                     self.game_over()
@@ -456,31 +495,36 @@ class Game:
                     self.player_damage = ri(2, 5)
                     self.monster_damage = ri(2, 5)
                     print(tab)
-                    print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                    print(
+                        f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
                     print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.monster_health > 0:
                         self.player_health -= self.monster_damage
                         print(tab)
-                        print(f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
-                        print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                        print(
+                            f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
+                        print(
+                            f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
 
                     if self.player_health > 0:
                         self.monster_health -= self.player_damage
                         print(tab)
-                        print(f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
+                        print(
+                            f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
                         print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                 if self.monster_health <= 0:
                     self.kills += 1
                     win = ri(1, 5)
                     print(tab)
-                    print(f'{prfx} The monster has been killed! You get coins + {win}$')
+                    print(
+                        f'{prfx} The monster has been killed! You get coins + {win}$')
                     self.start()
                 elif self.player_health <= 0:
-                    self.game_over() 
+                    self.game_over()
 
-        elif self.difficulty == 'Hard':           
+        elif self.difficulty == 'Hard':
             self.monster_health = ri(5, 7)
 
             if first_attack == 'PLAYER':
@@ -489,26 +533,31 @@ class Game:
                     self.player_damage = ri(3, 7)
                     self.monster_damage = ri(3, 7)
                     print(tab)
-                    print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                    print(
+                        f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
                     print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.player_health > 0:
                         self.monster_health -= self.player_damage
                         print(tab)
-                        print(f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
+                        print(
+                            f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
                         print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.monster_health > 0:
                         self.player_health -= self.monster_damage
                         print(tab)
-                        print(f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
-                        print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                        print(
+                            f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
+                        print(
+                            f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
 
                 if self.monster_health <= 0:
                     self.kills += 1
                     win = ri(1, 3)
                     print(tab)
-                    print(f'{prfx} The monster has been killed! You get coins + {win}$')
+                    print(
+                        f'{prfx} The monster has been killed! You get coins + {win}$')
                     self.start()
                 elif self.player_health <= 0:
                     self.game_over()
@@ -519,40 +568,46 @@ class Game:
                     self.player_damage = ri(3, 7)
                     self.monster_damage = ri(3, 7)
                     print(tab)
-                    print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                    print(
+                        f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
                     print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                     if self.monster_health > 0:
                         self.player_health -= self.monster_damage
                         print(tab)
-                        print(f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
-                        print(f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
+                        print(
+                            f'{prfx} Monster attacks: \'{self.name}\' takes damage - {self.monster_damage}♥')
+                        print(
+                            f'{self.name}: Lives [ {self.player_health}♥ ] | Coins [ {self.coins}$ ]')
 
                     if self.player_health > 0:
                         self.monster_health -= self.player_damage
                         print(tab)
-                        print(f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
+                        print(
+                            f'{prfx} You attack: Monster takes damage - {self.player_damage}♥')
                         print(f'Monster: Lives [ {self.monster_health}♥ ]')
 
                 if self.monster_health <= 0:
                     self.kills += 1
                     win = ri(1, 3)
                     print(tab)
-                    print(f'{prfx} The monster has been killed! You get coins + {win}$')
+                    print(
+                        f'{prfx} The monster has been killed! You get coins + {win}$')
                     self.start()
                 elif self.player_health <= 0:
                     self.game_over()
 
-    ### GAME OVER ###
+    # GAME OVER
     def game_over(self):
-        print('                    *****'                    )
-        print('    ****************  -  ****************'    )
+        print('                    *****')
+        print('    ****************  -  ****************')
         print('***************  |GAME_OVER|  ***************')
-        print('    ****************  -  ****************'    )
-        print('                    *****'                    )
-        ### Output and recording of results ###
+        print('    ****************  -  ****************')
+        print('                    *****')
+        # Output and recording of results
         print(tab)
-        record = input(f'{prfx} Results of player \'{self.name}\': \n{prfx} COINS: [ {self.coins}$ ] | KILLS: [ {self.kills} ] \n{prfx} Want to write the result to a table? ( Y | N )\n{log}')
+        record = input(
+            f'{prfx} Results of player \'{self.name}\': \n{prfx} COINS: [ {self.coins}$ ] | KILLS: [ {self.kills} ] \n{prfx} Want to write the result to a table? ( Y | N )\n{log}')
 
         if record == 'Y' or record == 'y' or record == 'Н' or record == 'н':
             records = open('./.Dangeon/.data/records.dungeon', 'a')
